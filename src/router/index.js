@@ -1,11 +1,32 @@
 import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Articulos from "../views/Articulos.vue";
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home,
+    name: "Inicio",
+    component: Articulos,
+  },
+  {
+    path: "/articulos",
+    name: "Articulos",
+    component: Articulos,
+  },
+  {
+    path: "/agregar-articulo",
+    name: "AgregarArticulo",
+    component: () =>
+      import(
+        /* webpackChunkName: "agregarArticulo" */ "../views/AgregarArticulo.vue"
+      ),
+  },
+  {
+    path: "/editar-articulo/:id",
+    name: "EditarArticulo",
+    component: () =>
+      import(
+        /* webpackChunkName: "editarArticulo" */ "../views/EditarArticulo.vue"
+      ),
   },
   {
     path: "/about",
