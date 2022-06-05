@@ -70,22 +70,11 @@
 </template>
 <script>
 import useArticles from "./../composables/useArticles.js";
-import { ref } from "vue";
 
 export default {
   setup() {
-    const { addArticle } = useArticles();
-    let article = ref({
-      nombre: "",
-      descripcion: "",
-      precio: "",
-      stock: "",
-    });
-    let nombre = ref("");
-    let descripcion = ref("");
-    let precio = ref("");
-    let stock = ref("");
-
+    const { article, nombre, descripcion, precio, stock, addArticle } = useArticles();
+  
     const saveArticle = () => {
       article.value.nombre = nombre;
       article.value.descripcion = descripcion;

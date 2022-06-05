@@ -13,13 +13,13 @@
           <tbody v-if="articles && articles !== []">
             <tr v-for="article in articles" :key="article.id">
               <td>{{ article.nombre }}</td>
-              <td>{{ article.descipcion }}</td>
+              <td>{{ article.descripcion }}</td>
               <td>{{ article.precio }}</td>
               <td>{{ article.stock }}</td>
               <td class="px-0">
                 <button class="btn btn-sm btn-primary px-4 mx-1">Ver</button>
                 <router-link :to="/editar-articulo/+ article.id" class="btn btn-sm btn-success px-3 mx-1">Editar</router-link>
-                <button class="btn btn-sm btn-danger mx-1">Eliminar</button>
+                <button @click="onClick(article.id)" class="btn btn-sm btn-danger mx-1">Eliminar</button>
               </td>
             </tr>
           </tbody>
@@ -49,16 +49,19 @@ import useArticles from "../composables/useArticles.js";
 export default {
   setup() {
 
-    const { articles, listArticles, isEdit, isAdd } = useArticles();
+    const { articles, listArticles, deleteArticle } = useArticles();
 
     onMounted(() => {
       listArticles();
     });
 
+    const onClick = (id) => {
+      deleteArticle(id);
+    }
+  
     return {
-      isEdit,
-      isAdd,
       articles,
+      onClick
     };
   },
 };

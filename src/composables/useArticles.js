@@ -3,8 +3,12 @@ import axios from "axios";
 
 const useArticles = () => {
   const articles = ref([]);
-  const articleFounded = ref({});
+  const article = ref({});
   const edit = ref(false);
+  const nombre = ref("");
+  const descripcion = ref("");
+  const precio = ref("");
+  const stock = ref("");
 
   const listArticles = () => {
     axios
@@ -28,28 +32,53 @@ const useArticles = () => {
     axios
       .get(`http://127.0.0.1:8000/api/articulos/${id}`)
       .then((res) => {
-        console.log(res.data);
+        nombre.value = res.data.nombre;
+        descripcion.value = res.data.descripcion;
+        precio.value = res.data.precio;
+        stock.value = res.data.stock;
       })
       .catch(console.log);
   };
 
-  const isEdit = () => {
-    edit.value = true;
+  const updateArticle = (id) => {
+    axios
+      .put(`http://127.0.0.1:8000/api/articulos/${id}`, {
+        nombre: nombre.value,
+        descripcion: descripcion.value,
+        precio: precio.value,
+        stock: stock.value,
+      })
+      .then((res) => {
+        alert("articulo actualizado exitosamente", res.data);
+      })
+      .catch(console.log);
   };
 
-  const isAdd = () => {
-    edit.value = false;
+  const deleteArticle = (id) => {
+    if (confirm("Esta seguro que quiere eliminar el elemento: " + nombre.value)) {
+      axios
+        .delete(`http://127.0.0.1:8000/api/articulos/${id}`)
+        .then((res) => {
+          alert("eliminado", res.data);
+          listArticles();
+        })
+        .catch(console.log);
+    }
   };
 
   return {
     edit,
-    articleFounded,
+    article,
+    nombre,
+    descripcion,
+    precio,
+    stock,
     articles,
     listArticles,
     addArticle,
     findArticleById,
-    isAdd,
-    isEdit,
+    updateArticle,
+    deleteArticle
   };
 };
 
